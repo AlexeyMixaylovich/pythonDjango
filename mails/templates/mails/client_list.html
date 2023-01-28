@@ -4,13 +4,40 @@
 
 {% block content %}
 
-<div class="list-group list-group-flush">
-  {% for client in object_list %}
-  <a href="{% url 'client-update' client.id %}" class="list-group-item list-group-item-action" aria-current="true">
-    id: {{client.id}}, name: {{ client.name }}, email: {{ client.email }}
-  </a>
-  {% endfor %}
-</div>
-<a href="{% url 'client-add' %}" class="link-primary">Добавить</a>
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th width="200px">Action</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          {% for client in object_list %}
+          <tr>
+            <td>{{client.name}}</td>
+            <td>{{client.email}}</td>
+            <td>
+              <div class="btn-group">
+                <a href="{% url 'client-update' client.id %}" class="btn btn-warning">
+                  Редактировать
+                </a>
+                <a href="{% url 'client-delete' client.id %}" class="btn btn-danger">
+                  Удалить
+                </a>
+              </div>
+            </td>
+          </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <hr class="mt-0 mb-4">
+  
+  <a href="{% url 'client-add' %}" class="btn btn-success">Добавить клиента</a>
 
 {% endblock %}

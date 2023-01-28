@@ -4,19 +4,41 @@
 
 {% block content %}
 
-<div class="list-group list-group-flush">
+  <div class="row">
+    <div class="col-12" >
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th width="420px">Action</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          {% for mailing in object_list %}
+          <tr>
+            <td>{{mailing.name}}</td>
+            <td>
+              <div class="btn-group">
+                <a href="{% url 'mailing-add-clients' mailing.id %}" class="btn btn-success">
+                  Добавить клиентов
+                </a>
+                <a href="{% url 'mailing-update' mailing.id %}" class="btn btn-warning">
+                  Редактировать 
+                </a>
+                <a href="{% url 'mailing-delete' mailing.id %}" class="btn btn-danger">
+                  Удалить
+                </a>
+              </div>
+            </td>
+          </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+    </div>
+  </div>
 
+  <hr class="mt-0 mb-4">
 
-  {% for mailing in object_list %}
-  
-  <a href="{% url 'mailing-update' mailing.id %}" class="list-group-item d-flex justify-content-between align-items-center" aria-current="true">
-    id: {{mailing.id}}, name: {{ mailing.name }}
-  </a>
-  <a href="{% url 'mailing-add-clients' mailing.id %}" class="link-primary">Добавить клиентов</a>
-  {% endfor %}
-</div>
-<hr class="mt-0 mb-4">
-
-<a href="{% url 'mailing-add' %}" class="link-primary">Добавить</a>
+  <a href="{% url 'mailing-add' %}" class="btn btn-success">Добавить рассылку</a>
 
 {% endblock %}

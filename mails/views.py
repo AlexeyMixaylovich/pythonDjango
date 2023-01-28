@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 # from .forms import ClientForm
@@ -21,33 +21,32 @@ class IndexView(generic.TemplateView):
 
 
 class ClientListView(generic.ListView):
+  extra_context = {'active': 'client'}
   model = Client
 
 class ClientCreateView(CreateView):
+  extra_context = {'active': 'client'}
   model = Client
   fields = ('name', 'email')
-
 
 class ClientUpdateView(UpdateView):
+  extra_context = {'active': 'client'}
   model = Client
   fields = ('name', 'email')
 
-
 class MailingListView(generic.ListView):
+  extra_context = {'active': 'mailing'}
   model = Mailing
-
 
 class MailingCreateView(CreateView):
+  extra_context = {'active': 'mailing'}
   model = Mailing
   fields = ['name']
-
 
 class MailingUpdateView(UpdateView):
+  extra_context = {'active': 'mailing'}
   model = Mailing
   fields = ['name']
-
-
-
 
 def MailingAddClients(request, pk):
 
@@ -83,28 +82,15 @@ def MailingDelClient(request, pk, client_id):
   return redirect('mailing-add-clients', pk)
 
 
-# def MailingAddClient(request, pk):
-#     # book_inst = get_object_or_404(Mailing, pk=pk)
+def ClientDelete(request, pk):
+  Client.objects.filter(id=pk).delete()
+  ClientsToMailing.objects.filter(client=pk).delete()
 
-#     # Если данный запрос типа POST, тогда
-#     if request.method == 'POST':
+  return redirect('client-list')
 
-#         # Создаём экземпляр формы и заполняем данными из запроса (связывание, binding):
-#         form = RenewBookForm(request.POST)
+def MailingDelete(request, pk):
+  Mailing.objects.filter(id=pk).delete()
+  ClientsToMailing.objects.filter(mailing=pk).delete()
 
-#         # Проверка валидности данных формы:
-#         if form.is_valid():
-#             # Обработка данных из form.cleaned_data
-#             #(здесь мы просто присваиваем их полю due_back)
-#             book_inst.due_back = form.cleaned_data['renewal_date']
-#             book_inst.save()
+  return redirect('mailing-list')
 
-#             # Переход по адресу 'all-borrowed':
-#             return HttpResponseRedirect(reverse('all-borrowed') )
-
-#     # Если это GET (или какой-либо ещё), создать форму по умолчанию.
-#     else:
-#         proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
-#         form = RenewBookForm(initial={'renewal_date': proposed_renewal_date,})
-
-#     return render(request, 'catalog/book_renew_librarian.html', {'form': form, 'bookinst':book_inst})

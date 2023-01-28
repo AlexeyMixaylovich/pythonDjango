@@ -15,23 +15,28 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-8">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-          <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'index' %}">ЗАЕБАТОР2000</a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="{% url 'client-list' %}">Клиенты</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'mailing-list' %}">Рассылка</a>
-                </li>
-        
-              </ul>
-            </div>
-          </div>
-        </nav>
-        <hr class="mt-0 mb-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            
+            <a class="nav-link disabled">ЗАЕБАТОР2000</a>
+          </li>
+          <li class="nav-item">
+            {% if active == 'client' %}
+              <a class="nav-link active" aria-current="page" href="{% url 'client-list' %}">Клиенты</a>
+            {% else %}
+              <a class="nav-link" aria-current="page" href="{% url 'client-list' %}">Клиенты</a>
+            {% endif %}
+
+          </li>
+          <li class="nav-item">
+            {% if active == 'mailing' %}
+              <a class="nav-link active" href="{% url 'mailing-list' %}">Рассылка</a>
+            {% else %}
+              <a class="nav-link" href="{% url 'mailing-list' %}">Рассылка</a>
+            {% endif %}
+          </li>
+        </ul>
+        <!-- <hr class="mt-0 mb-4"> -->
         {% block content %}
         {% endblock %}
       </div>

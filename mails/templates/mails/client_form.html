@@ -4,9 +4,10 @@
 
 {% block content %}
   <form method="post">
+    </br>
     {% csrf_token %}
     {{ form|crispy }}
-    <hr class="mt-0 mb-4">
+    </br>
     <button type="submit" class="btn btn-outline-success btn-lg">СХОРОНИТЬ</button>
   </form>
 {% endblock %}
