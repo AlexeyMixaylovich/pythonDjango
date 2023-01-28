@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="list-group list-group-flush">
+
+
+  {% for mailing in object_list %}
+  
+  <a href="{% url 'mailing-update' mailing.id %}" class="list-group-item d-flex justify-content-between align-items-center" aria-current="true">
+    id: {{mailing.id}}, name: {{ mailing.name }}
+  </a>
+  <a href="{% url 'mailing-add-clients' mailing.id %}" class="link-primary">Добавить клиентов</a>
+  {% endfor %}
+</div>
+<hr class="mt-0 mb-4">
+
+<a href="{% url 'mailing-add' %}" class="link-primary">Добавить</a>
+
+{% endblock %}

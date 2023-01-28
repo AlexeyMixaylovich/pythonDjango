@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="list-group list-group-flush">
+  {% for client in object_list %}
+  <a href="{% url 'client-update' client.id %}" class="list-group-item list-group-item-action" aria-current="true">
+    id: {{client.id}}, name: {{ client.name }}, email: {{ client.email }}
+  </a>
+  {% endfor %}
+</div>
+<a href="{% url 'client-add' %}" class="link-primary">Добавить</a>
+
+{% endblock %}
