@@ -11,7 +11,7 @@ class Client(models.Model):
 
 class Mailing(models.Model):
   name = models.CharField(max_length=200)
-  version = models.ForeignKey('Version', on_delete=models.DO_NOTHING, null=True)
+  version = models.ForeignKey('Version', on_delete=models.SET_NULL, null=True)
   clients = models.ManyToManyField(Client)
 
   
