@@ -35,6 +35,13 @@
               <a class="nav-link" href="{% url 'mailing-list' %}">Рассылка</a>
             {% endif %}
           </li>
+          <li class="nav-item">
+            {% if active == 'version' %}
+            <a class="nav-link active" href="{% url 'version-list' %}">Версии</a>
+            {% else %}
+            <a class="nav-link" href="{% url 'version-list' %}">Версии</a>
+            {% endif %}
+          </li>
         </ul>
         <!-- <hr class="mt-0 mb-4"> -->
         {% block content %}

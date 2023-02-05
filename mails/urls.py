@@ -17,4 +17,16 @@ urlpatterns = [
     path('mailings/add-clients/<int:pk>',views.MailingAddClients, name='mailing-add-clients'),
     path('mailings/<int:pk>/add-client/<int:client_id>',views.MailingAddClient, name='mailing-add-client'),
     path('mailings/<int:pk>/del-client/<int:client_id>', views.MailingDelClient, name='mailing-del-client'),
+
+
+
+    path('version/add/', views.VersionCreateView.as_view(), name='version-add'),
+    path('version/delete/<int:pk>',
+         views.VersionDeleteView.as_view(), name='version-delete'),
+    path('version/<int:pk>/', views.VersionUpdateView.as_view(),
+         name='version-update'),
+    path('versions', views.VersionListView.as_view(), name='version-list'),
+
+
+
 ]

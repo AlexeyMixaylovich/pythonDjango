@@ -2,16 +2,16 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse, reverse_lazy
-from django.views import generic
+from django.views.generic import ListView, TemplateView
 
 # from .forms import ClientForm
 
-from .models import Client, Mailing, ClientsToMailing
+from .models import Client, Mailing, ClientsToMailing, Version
 
 
 
 
-class IndexView(generic.TemplateView):
+class IndexView(TemplateView):
   template_name = 'index.html'
 
   def get_context_data(self, **kwargs):
@@ -20,7 +20,7 @@ class IndexView(generic.TemplateView):
     return context
 
 
-class ClientListView(generic.ListView):
+class ClientListView(ListView):
   extra_context = {'active': 'client'}
   model = Client
 
@@ -34,19 +34,23 @@ class ClientUpdateView(UpdateView):
   model = Client
   fields = ('name', 'email')
 
-class MailingListView(generic.ListView):
+class MailingListView(ListView):
   extra_context = {'active': 'mailing'}
+  # queryset = Book.objects.filter(publisher__name='ACME Publishing')
   model = Mailing
+
+  def get_queryset(self):
+      return Mailing.objects.all().select_related('version')
 
 class MailingCreateView(CreateView):
   extra_context = {'active': 'mailing'}
   model = Mailing
-  fields = ['name']
+  fields = ['name', 'version']
 
 class MailingUpdateView(UpdateView):
   extra_context = {'active': 'mailing'}
   model = Mailing
-  fields = ['name']
+  fields = ['name', 'version']
 
 def MailingAddClients(request, pk):
 
@@ -94,3 +98,25 @@ def MailingDelete(request, pk):
 
   return redirect('mailing-list')
 
+
+class VersionCreateView(CreateView):
+  extra_context = {'active': 'version'}
+  model = Version
+  fields = ('name', 'description')
+
+
+class VersionUpdateView(UpdateView):
+  extra_context = {'active': 'version'}
+  model = Version
+  fields = ('name', 'description')
+
+
+class VersionListView(ListView):
+  extra_context = {'active': 'version'}
+  model = Version
+
+
+class VersionDeleteView(DeleteView):
+  extra_context = {'active': 'version'}
+  model = Version
+  success_url = reverse_lazy('version-list')

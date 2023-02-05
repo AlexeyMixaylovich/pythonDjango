@@ -10,6 +10,10 @@
         <thead>
           <tr>
             <th>Name</th>
+            <th>Version</th>
+            <th>Version.name</th>
+            <th>Version.description</th>
+
             <th width="420px">Action</th>
           </tr>
         </thead>
@@ -17,6 +21,11 @@
           {% for mailing in object_list %}
           <tr>
             <td>{{mailing.name}}</td>
+            <td>{{mailing.version}}</td>
+            <td>{{mailing.version.name}}</td>
+            <td>{{mailing.version.description}}</td>
+
+
             <td>
               <div class="btn-group">
                 <a href="{% url 'mailing-add-clients' mailing.id %}" class="btn btn-success">
