@@ -8,8 +8,6 @@ class Client(models.Model):
 
   def __str__(self):
     return self.name+ ' ' + self.name
-  def get_absolute_url(self):
-    return reverse('client-list')
 
 class Mailing(models.Model):
   name = models.CharField(max_length=200)
